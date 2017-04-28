@@ -1,7 +1,6 @@
 package ps.java.brainfuck.enums;
 
 import org.junit.Test;
-import ps.java.brainfuck.exceptions.BrainfuckInputException;
 
 import static org.junit.Assert.assertEquals;
 import static ps.java.brainfuck.enums.Command.*;
