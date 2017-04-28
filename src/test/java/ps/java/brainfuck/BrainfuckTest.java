@@ -36,4 +36,13 @@ public class BrainfuckTest {
         assertEquals("Ps", Brainfuck.run("++++[->++++<],[->+<]>-.<++++++[->++++++<]>-.", "A"));
     }
 
+    @Test
+    public void testROT13() {
+        final String program =
+                "-,+[-[>>++++[>++++++++<-]<+<-[>+>+>-[>>>]<[[>+<-]>>+>]<<<<<-]]>>>[-]+" +
+                        ">--[-[<->+++[-]]]<[++++++++++++<[>-[>+>>]>[+[<+>-]>+>>]<<<<<-]" +
+                        ">>[<+>-]>[-[-<<[-]>>]<<[<<->>-]>>]<<[<<+>>-]]<[-]<.[-]<-,+]";
+        assertEquals("Uryyb", Brainfuck.run(program, "Hello\uFFFF"));
+    }
+
 }
