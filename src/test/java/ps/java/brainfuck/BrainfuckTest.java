@@ -7,8 +7,8 @@ import static org.junit.Assert.*;
 public class BrainfuckTest {
 
     @Test
-    public void main() throws Exception {
-        assertEquals("8", Brainfuck.run("++>+++++[<+>-]++++++++[<++++++>-]<."));
+    public void main() {
+        assertEquals("8", Brainfuck.run("++>+++++[<+>-]++++++++[<++++++>-]<.", ""));
     }
 
 }
