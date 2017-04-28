@@ -34,4 +34,8 @@ public class BrainfuckLimitedDataStorage implements BrainfuckDataStorage {
         return storage[pointer];
     }
 
+    public void setValue(final int value) {
+        storage[pointer] = (byte) value;
+    }
+
 }

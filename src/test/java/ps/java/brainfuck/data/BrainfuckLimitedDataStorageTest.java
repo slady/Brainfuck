@@ -42,4 +42,11 @@ public class BrainfuckLimitedDataStorageTest {
         assertEquals(1, storage.getValue());
     }
 
+    @Test
+    public void setValue() {
+        final BrainfuckLimitedDataStorage storage = new BrainfuckLimitedDataStorage();
+        storage.setValue(13);
+        assertEquals(13, storage.getValue());
+    }
+
 }

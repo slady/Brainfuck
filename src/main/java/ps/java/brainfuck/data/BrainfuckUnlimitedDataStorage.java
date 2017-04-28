@@ -37,6 +37,10 @@ public class BrainfuckUnlimitedDataStorage implements BrainfuckDataStorage {
         return getCell().value;
     }
 
+    public void setValue(final int value) {
+        getCell().value = (byte) value;
+    }
+
     private BrainfuckCell getCell() {
         STORAGE.computeIfAbsent(pointer, x -> new BrainfuckCell());
         return STORAGE.get(pointer);
