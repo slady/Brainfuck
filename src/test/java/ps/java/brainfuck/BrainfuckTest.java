@@ -8,6 +8,7 @@ public class BrainfuckTest {
 
     @Test
     public void main() throws Exception {
+        assertEquals("8", Brainfuck.run("++>+++++[<+>-]++++++++[<++++++>-]<."));
     }
 
 }

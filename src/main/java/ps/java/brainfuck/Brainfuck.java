@@ -11,4 +11,8 @@ public class Brainfuck {
     public static void main(final String[] args) {
     }
 
+    public static String run(String s) {
+        return "";
+    }
+
 }
