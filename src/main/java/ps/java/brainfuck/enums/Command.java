@@ -1,10 +1,8 @@
 package ps.java.brainfuck.enums;
 
-import ps.java.brainfuck.Brainfuck;
-import ps.java.brainfuck.exceptions.BrainfuckInputException;
-
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Brainfuck Commands.
@@ -22,7 +20,7 @@ public enum Command {
     JUMP_BACKWARD(']'),
     NO_OPERATION(null);
 
-    private static final Map<Character, Command> MAP = new HashMap<>();
+    private static final Map<Character, Command> MAP = Arrays.stream(values()).collect(Collectors.toMap(Command::getDefChar, x -> x));
 
     private final Character defChar;
 
@@ -30,10 +28,8 @@ public enum Command {
         this.defChar = ch;
     }
 
-    static {
-        for (final Command command : values()) {
-            MAP.put(command.defChar, command);
-        }
+    private Character getDefChar() {
+        return defChar;
     }
 
     public static Command getCommand(final char ch) {
