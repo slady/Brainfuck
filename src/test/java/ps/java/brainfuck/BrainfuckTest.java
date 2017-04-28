@@ -22,6 +22,11 @@ public class BrainfuckTest {
     }
 
     @Test
+    public void runHelloWorld3() {
+        assertEquals("Hello World!\n", Brainfuck.run("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.", ""));
+    }
+
+    @Test
     public void runInput1() {
         assertEquals("B", Brainfuck.run(",+.", "A"));
     }
