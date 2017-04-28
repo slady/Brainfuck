@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This is the unlimited data storage of the {@} interface
+ * This is the unlimited data storage of the {@link BrainfuckDataStorage} interface
  * for the {@link Brainfuck} esoteric programming language.
  *
  * @author slady@slady.net
  */
-public class BrainfuckUnlimitedDataStorage {
+public class BrainfuckUnlimitedDataStorage implements BrainfuckDataStorage {
 
     private final Map<Integer, BrainfuckCell> STORAGE = new HashMap<>();
 

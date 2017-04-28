@@ -3,12 +3,12 @@ package ps.java.brainfuck.data;
 import ps.java.brainfuck.Brainfuck;
 
 /**
- * This is the limited data storage of the {@} interface
+ * This is the limited data storage of the {@link BrainfuckDataStorage} interface
  * for the {@link Brainfuck} esoteric programming language.
  *
  * @author slady@slady.net
  */
-public class BrainfuckLimitedDataStorage {
+public class BrainfuckLimitedDataStorage implements BrainfuckDataStorage {
 
     byte[] storage = new byte[100];
 
