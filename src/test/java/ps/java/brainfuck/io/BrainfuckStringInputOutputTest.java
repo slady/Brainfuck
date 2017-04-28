@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class BrainfuckStringInputOutputTest {
 
     @Test
-    public void output() throws Exception {
+    public void output() {
         final BrainfuckStringInputOutput io = new BrainfuckStringInputOutput(null);
         io.output('P');
         io.output('s');
@@ -20,7 +20,7 @@ public class BrainfuckStringInputOutputTest {
     }
 
     @Test
-    public void input() throws Exception {
+    public void input() {
         final BrainfuckStringInputOutput io = new BrainfuckStringInputOutput("Ps");
         assertEquals('P', io.input());
         assertEquals('s', io.input());
