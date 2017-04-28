@@ -1,39 +1,39 @@
-package ps.java.brainfuck;
+package ps.java.brainfuck.data;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * Test the {@link BrainfuckDataStorage} class.
+ * Test the {@link BrainfuckLimitedDataStorage} class.
  *
  * @author slady@slady.net
  */
-public class BrainfuckDataStorageTest {
+public class BrainfuckLimitedDataStorageTest {
 
     @Test
     public void incrementPointer() {
-        final BrainfuckDataStorage storage = new BrainfuckDataStorage();
+        final BrainfuckLimitedDataStorage storage = new BrainfuckLimitedDataStorage();
         storage.incrementPointer();
     }
 
     @Test
     public void decrementPointer() {
-        final BrainfuckDataStorage storage = new BrainfuckDataStorage();
+        final BrainfuckLimitedDataStorage storage = new BrainfuckLimitedDataStorage();
         storage.incrementPointer();
         storage.decrementPointer();
     }
 
     @Test
     public void increaseValue() {
-        final BrainfuckDataStorage storage = new BrainfuckDataStorage();
+        final BrainfuckLimitedDataStorage storage = new BrainfuckLimitedDataStorage();
         storage.increaseValue();
         assertEquals(1, storage.getValue());
     }
 
     @Test
     public void decreaseValue() {
-        final BrainfuckDataStorage storage = new BrainfuckDataStorage();
+        final BrainfuckLimitedDataStorage storage = new BrainfuckLimitedDataStorage();
         storage.decreaseValue();
         storage.incrementPointer();
         storage.increaseValue();
