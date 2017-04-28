@@ -21,4 +21,14 @@ public class BrainfuckTest {
         assertEquals("Hello World!\n", Brainfuck.run(">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]<.#>+++++++++++[<+++++>-]<.>++++++++[<+++>-]<.+++.------.--------.[-]>++++++++[<++++>-]<+.[-]++++++++++.", ""));
     }
 
+    @Test
+    public void runInput1() {
+        assertEquals("B", Brainfuck.run(",+.", "A"));
+    }
+
+    @Test
+    public void runInput2() {
+        assertEquals("Ps", Brainfuck.run("++++[->++++<],[->+<]>-.<++++++[->++++++<]>-.", "A"));
+    }
+
 }
