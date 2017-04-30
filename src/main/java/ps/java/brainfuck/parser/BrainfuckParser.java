@@ -14,33 +14,56 @@ import java.util.Stack;
  */
 public class BrainfuckParser {
 
+    private static final int TAB_SIZE = 8;
+
     private final List<BrainfuckCommandInfo> COMMANDS = new ArrayList<>();
 
     public BrainfuckParser(final String program) {
         final Stack<Integer> stack = new Stack<>();
+        int line = 1;
+        int position = 0;
 
         for (final char ch : program.toCharArray()) {
+            if (ch >= ' ') {
+                position++;
+            }
+
             final Command command = Command.getCommand(ch);
+            final BrainfuckTokenPosition tokenPosition = new BrainfuckTokenPosition(line, position);
 
             if (command == Command.JUMP_FORWARD) {
                 stack.push(COMMANDS.size());
-                COMMANDS.add(new BrainfuckJumpCommandInfo(command));
+                COMMANDS.add(new BrainfuckJumpCommandInfo(command, tokenPosition));
             } else if (command == Command.JUMP_BACKWARD) {
                 if (stack.isEmpty()) {
-                    throw new BrainfuckInputException("Unmatched closing bracket");
+                    throw new BrainfuckInputException("Unmatched closing bracket, line " + line + ", position " + position);
                 }
 
                 final int forwardPosition = stack.pop();
                 final int backwardPosition = getCommandInfoCount();
                 ((BrainfuckJumpCommandInfo) COMMANDS.get(forwardPosition)).setJumpPosition(backwardPosition);
-                COMMANDS.add(new BrainfuckJumpCommandInfo(command, forwardPosition));
+                COMMANDS.add(new BrainfuckJumpCommandInfo(command, tokenPosition, forwardPosition));
             } else if (command != Command.NO_OPERATION) {
-                COMMANDS.add(new BrainfuckCommandInfo(command));
+                COMMANDS.add(new BrainfuckCommandInfo(command, tokenPosition));
+            } else if (ch == '\n') {
+                line++;
+                position = 0;
+            } else if (ch == '\t') {
+                position += TAB_SIZE;
+                position /= TAB_SIZE;
+                position *= TAB_SIZE;
             }
         }
 
         if (!stack.isEmpty()) {
-            throw new BrainfuckInputException("Unmatched opening brackets: " + stack.size());
+            if (stack.size() == 1) {
+                final Integer forwardPosition = stack.pop();
+                final BrainfuckJumpCommandInfo forwardCommand = (BrainfuckJumpCommandInfo) COMMANDS.get(forwardPosition);
+                final BrainfuckTokenPosition tokenPosition = forwardCommand.getTokenPosition();
+                throw new BrainfuckInputException("Unmatched opening bracket, line " + tokenPosition.getLine() + ", position " + tokenPosition.getPosition());
+            }
+
+            throw new BrainfuckInputException("Unmatched opening brackets, count: " + stack.size());
         }
     }
 

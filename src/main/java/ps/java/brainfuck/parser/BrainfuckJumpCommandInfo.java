@@ -12,12 +12,12 @@ public class BrainfuckJumpCommandInfo extends BrainfuckCommandInfo {
 
     private int jumpPosition;
 
-    public BrainfuckJumpCommandInfo(final Command command) {
-        super(command);
+    public BrainfuckJumpCommandInfo(final Command command, final BrainfuckTokenPosition tokenPosition) {
+        super(command, tokenPosition);
     }
 
-    public BrainfuckJumpCommandInfo(final Command command, final int jumpPosition) {
-        super(command);
+    public BrainfuckJumpCommandInfo(final Command command, final BrainfuckTokenPosition tokenPosition, final int jumpPosition) {
+        this(command, tokenPosition);
         setJumpPosition(jumpPosition);
     }
 

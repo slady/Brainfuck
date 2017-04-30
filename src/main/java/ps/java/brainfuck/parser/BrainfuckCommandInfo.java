@@ -12,12 +12,19 @@ public class BrainfuckCommandInfo {
 
     private final Command command;
 
-    public BrainfuckCommandInfo(final Command command) {
+    private final BrainfuckTokenPosition tokenPosition;
+
+    public BrainfuckCommandInfo(final Command command, final BrainfuckTokenPosition tokenPosition) {
         this.command = command;
+        this.tokenPosition = tokenPosition;
     }
 
     public Command getCommand() {
         return command;
+    }
+
+    public BrainfuckTokenPosition getTokenPosition() {
+        return tokenPosition;
     }
 
 }

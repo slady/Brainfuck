@@ -59,14 +59,64 @@ public class BrainfuckParserTest {
         assertEquals(0, jump5.getJumpPosition());
     }
 
-    @Test(expected = BrainfuckInputException.class)
-    public void unmatchedOpening() {
-        new BrainfuckParser("[");
+    @Test
+    public void unmatchedOpening1() {
+        try {
+            new BrainfuckParser("[");
+            fail();
+        } catch (final BrainfuckInputException e) {
+            assertEquals("Unmatched opening bracket, line 1, position 1", e.getMessage());
+        }
     }
 
-    @Test(expected = BrainfuckInputException.class)
+    @Test
+    public void unmatchedOpening3() {
+        try {
+            new BrainfuckParser("[[[");
+            fail();
+        } catch (final BrainfuckInputException e) {
+            assertEquals("Unmatched opening brackets, count: 3", e.getMessage());
+        }
+    }
+
+    @Test
     public void unmatchedClosing() {
-        new BrainfuckParser("]");
+        try {
+            new BrainfuckParser("]");
+            fail();
+        } catch (final BrainfuckInputException e) {
+            assertEquals("Unmatched closing bracket, line 1, position 1", e.getMessage());
+        }
+    }
+
+    @Test
+    public void parserPosition() {
+        try {
+            new BrainfuckParser("xx]");
+            fail();
+        } catch (final BrainfuckInputException e) {
+            assertEquals("Unmatched closing bracket, line 1, position 3", e.getMessage());
+        }
+    }
+
+    @Test
+    public void parserNewLine() {
+        try {
+            new BrainfuckParser("\nx]");
+            fail();
+        } catch (final BrainfuckInputException e) {
+            assertEquals("Unmatched closing bracket, line 2, position 2", e.getMessage());
+        }
+    }
+
+    @Test
+    public void parserTabulator() {
+        try {
+            new BrainfuckParser("x\tx]");
+            fail();
+        } catch (final BrainfuckInputException e) {
+            assertEquals("Unmatched closing bracket, line 1, position 10", e.getMessage());
+        }
     }
 
 }
