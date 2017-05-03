@@ -1,6 +1,7 @@
 package ps.java.brainfuck;
 
 import org.junit.Test;
+import ps.java.brainfuck.exceptions.BrainfuckInputException;
 
 import static org.junit.Assert.*;
 
@@ -34,6 +35,16 @@ public class BrainfuckTest {
     @Test
     public void runInput2() {
         assertEquals("Ps", Brainfuck.run("++++[->++++<],[->+<]>-.<++++++[->++++++<]>-.", "A"));
+    }
+
+    @Test
+    public void runInputException() {
+        try {
+            Brainfuck.run(",,", "A");
+            fail();
+        } catch (final BrainfuckInputException e) {
+
+        }
     }
 
     @Test

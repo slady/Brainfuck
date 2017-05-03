@@ -2,11 +2,13 @@ package ps.java.brainfuck;
 
 import ps.java.brainfuck.data.BrainfuckDataStorage;
 import ps.java.brainfuck.data.BrainfuckLimitedDataStorage;
+import ps.java.brainfuck.exceptions.BrainfuckInputException;
 import ps.java.brainfuck.io.BrainfuckInputOutput;
 import ps.java.brainfuck.io.BrainfuckStringInputOutput;
 import ps.java.brainfuck.parser.BrainfuckCommandInfo;
 import ps.java.brainfuck.parser.BrainfuckJumpCommandInfo;
 import ps.java.brainfuck.parser.BrainfuckParser;
+import ps.java.brainfuck.parser.BrainfuckTokenPosition;
 
 /**
  * This is an interpreter for the Brainfuck esoteric programming language.
@@ -43,7 +45,12 @@ public class Brainfuck {
                     break;
 
                 case INPUT:
-                    dataStorage.setValue(inputOutput.input());
+                    try {
+                        dataStorage.setValue(inputOutput.input());
+                    } catch (final StringIndexOutOfBoundsException e) {
+                        final BrainfuckTokenPosition tokenPosition = commandInfo.getTokenPosition();
+                        throw new BrainfuckInputException("Reading after input ended, line " + tokenPosition.getLine() + ", position " + tokenPosition.getPosition());
+                    }
                     break;
 
                 case JUMP_FORWARD:
