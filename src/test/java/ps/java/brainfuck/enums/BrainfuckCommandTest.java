@@ -3,18 +3,18 @@ package ps.java.brainfuck.enums;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static ps.java.brainfuck.enums.Command.*;
+import static ps.java.brainfuck.enums.BrainfuckCommand.*;
 
 /**
- * Test the {@link Command} class.
+ * Test the {@link BrainfuckCommand} class.
  *
  * @author slady@slady.net
  */
-public class CommandTest {
+public class BrainfuckCommandTest {
 
     @Test
     public void testCommandCount() {
-        assertEquals(8 + 1, Command.values().length);
+        assertEquals(8 + 1, BrainfuckCommand.values().length);
     }
 
     @Test

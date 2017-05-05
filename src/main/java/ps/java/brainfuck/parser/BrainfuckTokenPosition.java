@@ -1,7 +1,9 @@
 package ps.java.brainfuck.parser;
 
+import ps.java.brainfuck.enums.BrainfuckCommand;
+
 /**
- * This is the class holding the token position for the {@link ps.java.brainfuck.enums.Command}
+ * This is the class holding the token position for the {@link BrainfuckCommand}
  * of the {@link ps.java.brainfuck.Brainfuck} programming language.
  *
  * @author slady@slady.net

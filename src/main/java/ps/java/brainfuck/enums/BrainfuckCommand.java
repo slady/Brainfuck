@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * Brainfuck Commands.
  * @author slady@slady.net
  */
-public enum Command {
+public enum BrainfuckCommand {
 
     INCREMENT_POINTER('>'),
     DECREMENT_POINTER('<'),
@@ -20,11 +20,11 @@ public enum Command {
     JUMP_BACKWARD(']'),
     NO_OPERATION(null);
 
-    private static final Map<Character, Command> MAP = Arrays.stream(values()).collect(Collectors.toMap(Command::getDefChar, x -> x));
+    private static final Map<Character, BrainfuckCommand> MAP = Arrays.stream(values()).collect(Collectors.toMap(BrainfuckCommand::getDefChar, x -> x));
 
     private final Character defChar;
 
-    Command(final Character ch) {
+    BrainfuckCommand(final Character ch) {
         this.defChar = ch;
     }
 
@@ -32,7 +32,7 @@ public enum Command {
         return defChar;
     }
 
-    public static Command getCommand(final char ch) {
+    public static BrainfuckCommand getCommand(final char ch) {
         if (!MAP.containsKey(ch)) {
             return NO_OPERATION;
         }

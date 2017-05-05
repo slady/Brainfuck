@@ -1,6 +1,6 @@
 package ps.java.brainfuck.parser;
 
-import ps.java.brainfuck.enums.Command;
+import ps.java.brainfuck.enums.BrainfuckCommand;
 import ps.java.brainfuck.exceptions.BrainfuckInputException;
 
 import java.util.ArrayList;
@@ -28,13 +28,13 @@ public class BrainfuckParser {
                 position++;
             }
 
-            final Command command = Command.getCommand(ch);
+            final BrainfuckCommand command = BrainfuckCommand.getCommand(ch);
             final BrainfuckTokenPosition tokenPosition = new BrainfuckTokenPosition(line, position);
 
-            if (command == Command.JUMP_FORWARD) {
+            if (command == BrainfuckCommand.JUMP_FORWARD) {
                 stack.push(COMMANDS.size());
                 COMMANDS.add(new BrainfuckJumpCommandInfo(command, tokenPosition));
-            } else if (command == Command.JUMP_BACKWARD) {
+            } else if (command == BrainfuckCommand.JUMP_BACKWARD) {
                 if (stack.isEmpty()) {
                     throw new BrainfuckInputException("Unmatched closing bracket, line " + line + ", position " + position);
                 }
@@ -43,7 +43,7 @@ public class BrainfuckParser {
                 final int backwardPosition = getCommandInfoCount();
                 ((BrainfuckJumpCommandInfo) COMMANDS.get(forwardPosition)).setJumpPosition(backwardPosition);
                 COMMANDS.add(new BrainfuckJumpCommandInfo(command, tokenPosition, forwardPosition));
-            } else if (command != Command.NO_OPERATION) {
+            } else if (command != BrainfuckCommand.NO_OPERATION) {
                 COMMANDS.add(new BrainfuckCommandInfo(command, tokenPosition));
             } else if (ch == '\n') {
                 line++;
