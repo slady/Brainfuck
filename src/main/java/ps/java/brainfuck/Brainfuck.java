@@ -20,61 +20,69 @@ import ps.java.brainfuck.parser.BrainfuckTokenPosition;
 public class Brainfuck {
 
     public static void run(final BrainfuckParser parser, final BrainfuckDataStorage dataStorage, final BrainfuckInputOutput inputOutput) {
-        final BrainfuckState state = new BrainfuckState();
+        final BrainfuckState state = new BrainfuckState(parser, dataStorage, inputOutput);
 
         while (state.getPointer() < parser.getCommandInfoCount()) {
-            final BrainfuckCommandInfo commandInfo = parser.getCommandInfo(state.getPointer());
-            switch (commandInfo.getCommand()) {
-                case INCREMENT_POINTER:
-                    dataStorage.incrementPointer();
-                    break;
-
-                case DECREMENT_POINTER:
-                    dataStorage.decrementPointer();
-                    break;
-
-                case INCREASE_VALUE:
-                    dataStorage.increaseValue();
-                    break;
-
-                case DECREASE_VALUE:
-                    dataStorage.decreaseValue();
-                    break;
-
-                case OUTPUT:
-                    inputOutput.output(dataStorage.getValue());
-                    break;
-
-                case INPUT:
-                    try {
-                        dataStorage.setValue(inputOutput.input());
-                    } catch (final StringIndexOutOfBoundsException e) {
-                        final BrainfuckTokenPosition tokenPosition = commandInfo.getTokenPosition();
-                        throw new BrainfuckInputException("Reading after input ended, line " + tokenPosition.getLine() + ", position " + tokenPosition.getPosition());
-                    }
-                    break;
-
-                case JUMP_FORWARD:
-                    if (dataStorage.getValue() == 0) {
-                        state.setPointer(((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition());
-                    }
-
-                    break;
-
-                case JUMP_BACKWARD:
-                    if (dataStorage.getValue() != 0) {
-                        state.setPointer(((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition());
-                    }
-
-                    break;
-
-                case NO_OPERATION:
-                default:
-                    break;
-            }
-
-            state.increasePointer();
+            step(state);
         }
+    }
+
+    public static void step(final BrainfuckState state) {
+        final BrainfuckParser parser = state.getParser();
+        final BrainfuckDataStorage dataStorage = state.getDataStorage();
+        final BrainfuckInputOutput inputOutput = state.getInputOutput();
+
+        final BrainfuckCommandInfo commandInfo = parser.getCommandInfo(state.getPointer());
+        switch (commandInfo.getCommand()) {
+            case INCREMENT_POINTER:
+                dataStorage.incrementPointer();
+                break;
+
+            case DECREMENT_POINTER:
+                dataStorage.decrementPointer();
+                break;
+
+            case INCREASE_VALUE:
+                dataStorage.increaseValue();
+                break;
+
+            case DECREASE_VALUE:
+                dataStorage.decreaseValue();
+                break;
+
+            case OUTPUT:
+                inputOutput.output(dataStorage.getValue());
+                break;
+
+            case INPUT:
+                try {
+                    dataStorage.setValue(inputOutput.input());
+                } catch (final StringIndexOutOfBoundsException e) {
+                    final BrainfuckTokenPosition tokenPosition = commandInfo.getTokenPosition();
+                    throw new BrainfuckInputException("Reading after input ended, line " + tokenPosition.getLine() + ", position " + tokenPosition.getPosition());
+                }
+                break;
+
+            case JUMP_FORWARD:
+                if (dataStorage.getValue() == 0) {
+                    state.setPointer(((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition());
+                }
+
+                break;
+
+            case JUMP_BACKWARD:
+                if (dataStorage.getValue() != 0) {
+                    state.setPointer(((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition());
+                }
+
+                break;
+
+            case NO_OPERATION:
+            default:
+                break;
+        }
+
+        state.increasePointer();
     }
 
     public static String run(final String program, final String input) {
