@@ -2,6 +2,7 @@ package ps.java.brainfuck;
 
 import ps.java.brainfuck.data.BrainfuckDataStorage;
 import ps.java.brainfuck.data.BrainfuckLimitedDataStorage;
+import ps.java.brainfuck.data.BrainfuckState;
 import ps.java.brainfuck.exceptions.BrainfuckInputException;
 import ps.java.brainfuck.io.BrainfuckInputOutput;
 import ps.java.brainfuck.io.BrainfuckStringInputOutput;
@@ -19,10 +20,10 @@ import ps.java.brainfuck.parser.BrainfuckTokenPosition;
 public class Brainfuck {
 
     public static void run(final BrainfuckParser parser, final BrainfuckDataStorage dataStorage, final BrainfuckInputOutput inputOutput) {
-        int pointer = 0;
+        final BrainfuckState state = new BrainfuckState();
 
-        while (pointer < parser.getCommandInfoCount()) {
-            final BrainfuckCommandInfo commandInfo = parser.getCommandInfo(pointer);
+        while (state.getPointer() < parser.getCommandInfoCount()) {
+            final BrainfuckCommandInfo commandInfo = parser.getCommandInfo(state.getPointer());
             switch (commandInfo.getCommand()) {
                 case INCREMENT_POINTER:
                     dataStorage.incrementPointer();
@@ -55,14 +56,14 @@ public class Brainfuck {
 
                 case JUMP_FORWARD:
                     if (dataStorage.getValue() == 0) {
-                        pointer = ((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition();
+                        state.setPointer(((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition());
                     }
 
                     break;
 
                 case JUMP_BACKWARD:
                     if (dataStorage.getValue() != 0) {
-                        pointer = ((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition();
+                        state.setPointer(((BrainfuckJumpCommandInfo) commandInfo).getJumpPosition());
                     }
 
                     break;
@@ -72,7 +73,7 @@ public class Brainfuck {
                     break;
             }
 
-            pointer++;
+            state.increasePointer();
         }
     }
 
